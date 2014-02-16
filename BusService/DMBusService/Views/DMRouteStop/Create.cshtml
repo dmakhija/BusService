@@ -1,0 +1,62 @@
+﻿@model DMBusService.Models.routeStop
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>Bus Route Code: @ViewBag.routeCode</h1> <br/>
+                <h1>Bus Route Name: @ViewBag.routeName</h1>
+            </hgroup>
+        </div>
+    </section>
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>routeStop</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.busRouteCode, "busRoute")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("busRouteCode")
+            @Html.ValidationMessageFor(model => model.busRouteCode) 
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.busStopNumber, "busStop")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("busStopNumber", String.Empty)
+            @Html.ValidationMessageFor(model => model.busStopNumber)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.offsetMinutes)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.offsetMinutes)
+            @Html.ValidationMessageFor(model => model.offsetMinutes)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BusServiceModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="BusServiceContext" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="buses" EntityType="BusServiceModel.bus" />
+    <EntitySet Name="busRoutes" EntityType="BusServiceModel.busRoute" />
+    <EntitySet Name="busStops" EntityType="BusServiceModel.busStop" />
+    <EntitySet Name="drivers" EntityType="BusServiceModel.driver" />
+    <EntitySet Name="routeSchedules" EntityType="BusServiceModel.routeSchedule" />
+    <EntitySet Name="routeStops" EntityType="BusServiceModel.routeStop" />
+    <EntitySet Name="sysdiagrams" EntityType="BusServiceModel.sysdiagram" />
+    <EntitySet Name="trips" EntityType="BusServiceModel.trip" />
+    <EntitySet Name="tripStops" EntityType="BusServiceModel.tripStop" />
+    <AssociationSet Name="FK_trip_bus" Association="BusServiceModel.FK_trip_bus">
+      <End Role="bus" EntitySet="buses" />
+      <End Role="trip" EntitySet="trips" />
+    </AssociationSet>
+    <AssociationSet Name="FK_routeSchedule_busRoute" Association="BusServiceModel.FK_routeSchedule_busRoute">
+      <End Role="busRoute" EntitySet="busRoutes" />
+      <End Role="routeSchedule" EntitySet="routeSchedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_routeStop_busRoute" Association="BusServiceModel.FK_routeStop_busRoute">
+      <End Role="busRoute" EntitySet="busRoutes" />
+      <End Role="routeStop" EntitySet="routeStops" />
+    </AssociationSet>
+    <AssociationSet Name="FK_routeStop_busStop" Association="BusServiceModel.FK_routeStop_busStop">
+      <End Role="busStop" EntitySet="busStops" />
+      <End Role="routeStop" EntitySet="routeStops" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tripStop_busStop" Association="BusServiceModel.FK_tripStop_busStop">
+      <End Role="busStop" EntitySet="busStops" />
+      <End Role="tripStop" EntitySet="tripStops" />
+    </AssociationSet>
+    <AssociationSet Name="FK_trip_driver" Association="BusServiceModel.FK_trip_driver">
+      <End Role="driver" EntitySet="drivers" />
+      <End Role="trip" EntitySet="trips" />
+    </AssociationSet>
+    <AssociationSet Name="FK_trip_routeSchedule" Association="BusServiceModel.FK_trip_routeSchedule">
+      <End Role="routeSchedule" EntitySet="routeSchedules" />
+      <End Role="trip" EntitySet="trips" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tripStop_trip" Association="BusServiceModel.FK_tripStop_trip">
+      <End Role="trip" EntitySet="trips" />
+      <End Role="tripStop" EntitySet="tripStops" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="bus">
+    <Key>
+      <PropertyRef Name="busId" />
+    </Key>
+    <Property Name="busId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="busNumber" Type="Int32" Nullable="false" />
+    <Property Name="status" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="comments" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="trips" Relationship="BusServiceModel.FK_trip_bus" FromRole="bus" ToRole="trip" />
+  </EntityType>
+  <EntityType Name="busRoute">
+    <Key>
+      <PropertyRef Name="busRouteCode" />
+    </Key>
+    <Property Name="busRouteCode" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="routeName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="routeSchedules" Relationship="BusServiceModel.FK_routeSchedule_busRoute" FromRole="busRoute" ToRole="routeSchedule" />
+    <NavigationProperty Name="routeStops" Relationship="BusServiceModel.FK_routeStop_busRoute" FromRole="busRoute" ToRole="routeStop" />
+  </EntityType>
+  <EntityType Name="busStop">
+    <Key>
+      <PropertyRef Name="busStopNumber" />
+    </Key>
+    <Property Name="busStopNumber" Type="Int32" Nullable="false" />
+    <Property Name="location" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="locationHash" Type="Int32" Nullable="false" />
+    <Property Name="goingDowntown" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="routeStops" Relationship="BusServiceModel.FK_routeStop_busStop" FromRole="busStop" ToRole="routeStop" />
+    <NavigationProperty Name="tripStops" Relationship="BusServiceModel.FK_tripStop_busStop" FromRole="busStop" ToRole="tripStop" />
+  </EntityType>
+  <EntityType Name="driver">
+    <Key>
+      <PropertyRef Name="driverId" />
+    </Key>
+    <Property Name="driverId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="firstName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="lastName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="fullName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="homePhone" Type="String" MaxLength="12" Unicode="true" FixedLength="false" />
+    <Property Name="workPhone" Type="String" MaxLength="12" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="trips" Relationship="BusServiceModel.FK_trip_driver" FromRole="driver" ToRole="trip" />
+  </EntityType>
+  <EntityType Name="routeSchedule">
+    <Key>
+      <PropertyRef Name="routeScheduleId" />
+    </Key>
+    <Property Name="routeScheduleId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="busRouteCode" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="startTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="isWeekDay" Type="Boolean" Nullable="false" />
+    <Property Name="comments" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="busRoute" Relationship="BusServiceModel.FK_routeSchedule_busRoute" FromRole="routeSchedule" ToRole="busRoute" />
+    <NavigationProperty Name="trips" Relationship="BusServiceModel.FK_trip_routeSchedule" FromRole="routeSchedule" ToRole="trip" />
+  </EntityType>
+  <EntityType Name="routeStop">
+    <Key>
+      <PropertyRef Name="routeStopId" />
+    </Key>
+    <Property Name="routeStopId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="busRouteCode" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="busStopNumber" Type="Int32" />
+    <Property Name="offsetMinutes" Type="Int32" />
+    <NavigationProperty Name="busRoute" Relationship="BusServiceModel.FK_routeStop_busRoute" FromRole="routeStop" ToRole="busRoute" />
+    <NavigationProperty Name="busStop" Relationship="BusServiceModel.FK_routeStop_busStop" FromRole="routeStop" ToRole="busStop" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="trip">
+    <Key>
+      <PropertyRef Name="tripId" />
+    </Key>
+    <Property Name="tripId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="routeScheduleId" Type="Int32" Nullable="false" />
+    <Property Name="tripDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="driverId" Type="Int32" Nullable="false" />
+    <Property Name="busId" Type="Int32" Nullable="false" />
+    <Property Name="comments" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="bus" Relationship="BusServiceModel.FK_trip_bus" FromRole="trip" ToRole="bus" />
+    <NavigationProperty Name="driver" Relationship="BusServiceModel.FK_trip_driver" FromRole="trip" ToRole="driver" />
+    <NavigationProperty Name="routeSchedule" Relationship="BusServiceModel.FK_trip_routeSchedule" FromRole="trip" ToRole="routeSchedule" />
+    <NavigationProperty Name="tripStops" Relationship="BusServiceModel.FK_tripStop_trip" FromRole="trip" ToRole="tripStop" />
+  </EntityType>
+  <EntityType Name="tripStop">
+    <Key>
+      <PropertyRef Name="tripStopId" />
+    </Key>
+    <Property Name="tripStopId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="tripId" Type="Int32" Nullable="false" />
+    <Property Name="busStopNumber" Type="Int32" Nullable="false" />
+    <Property Name="tripStopTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="comments" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="busStop" Relationship="BusServiceModel.FK_tripStop_busStop" FromRole="tripStop" ToRole="busStop" />
+    <NavigationProperty Name="trip" Relationship="BusServiceModel.FK_tripStop_trip" FromRole="tripStop" ToRole="trip" />
+  </EntityType>
+  <Association Name="FK_trip_bus">
+    <End Role="bus" Type="BusServiceModel.bus" Multiplicity="1" />
+    <End Role="trip" Type="BusServiceModel.trip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="bus">
+        <PropertyRef Name="busId" />
+      </Principal>
+      <Dependent Role="trip">
+        <PropertyRef Name="busId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_routeSchedule_busRoute">
+    <End Role="busRoute" Type="BusServiceModel.busRoute" Multiplicity="0..1" />
+    <End Role="routeSchedule" Type="BusServiceModel.routeSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="busRoute">
+        <PropertyRef Name="busRouteCode" />
+      </Principal>
+      <Dependent Role="routeSchedule">
+        <PropertyRef Name="busRouteCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_routeStop_busRoute">
+    <End Role="busRoute" Type="BusServiceModel.busRoute" Multiplicity="0..1" />
+    <End Role="routeStop" Type="BusServiceModel.routeStop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="busRoute">
+        <PropertyRef Name="busRouteCode" />
+      </Principal>
+      <Dependent Role="routeStop">
+        <PropertyRef Name="busRouteCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_routeStop_busStop">
+    <End Role="busStop" Type="BusServiceModel.busStop" Multiplicity="0..1" />
+    <End Role="routeStop" Type="BusServiceModel.routeStop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="busStop">
+        <PropertyRef Name="busStopNumber" />
+      </Principal>
+      <Dependent Role="routeStop">
+        <PropertyRef Name="busStopNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tripStop_busStop">
+    <End Role="busStop" Type="BusServiceModel.busStop" Multiplicity="1" />
+    <End Role="tripStop" Type="BusServiceModel.tripStop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="busStop">
+        <PropertyRef Name="busStopNumber" />
+      </Principal>
+      <Dependent Role="tripStop">
+        <PropertyRef Name="busStopNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_trip_driver">
+    <End Role="driver" Type="BusServiceModel.driver" Multiplicity="1" />
+    <End Role="trip" Type="BusServiceModel.trip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="driver">
+        <PropertyRef Name="driverId" />
+      </Principal>
+      <Dependent Role="trip">
+        <PropertyRef Name="driverId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_trip_routeSchedule">
+    <End Role="routeSchedule" Type="BusServiceModel.routeSchedule" Multiplicity="1" />
+    <End Role="trip" Type="BusServiceModel.trip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="routeSchedule">
+        <PropertyRef Name="routeScheduleId" />
+      </Principal>
+      <Dependent Role="trip">
+        <PropertyRef Name="routeScheduleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tripStop_trip">
+    <End Role="trip" Type="BusServiceModel.trip" Multiplicity="1" />
+    <End Role="tripStop" Type="BusServiceModel.tripStop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="trip">
+        <PropertyRef Name="tripId" />
+      </Principal>
+      <Dependent Role="tripStop">
+        <PropertyRef Name="tripId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

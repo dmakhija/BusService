@@ -1,0 +1,69 @@
+﻿@model IEnumerable<DMBusService.Models.routeStop>
+
+@{
+    ViewBag.Title = "BusStopsListing";
+}
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>Bus Route Code: @ViewBag.routeCode</h1> <br/>
+                <h1>Bus Route Name: @ViewBag.routeName</h1>
+            </hgroup>
+        </div>
+    </section>
+}
+<h2>Bus Stops Listing</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")<br /><br />
+    <text><b>OrderBy: </b> </text>
+    @Html.ActionLink("StopLocation", "Index", new {OrderBy = "stopLocation"}) |
+    @Html.ActionLink("StopNumber","Index", new {OrderBy="StopNumber"})
+</p>
+<table>
+    <tr>
+        <!--
+        <th>
+            @Html.DisplayNameFor(model => model.busRoute.routeName)
+        </th>
+        -->
+        <th>
+            @Html.DisplayNameFor(model => model.busStopNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.busStop.location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.offsetMinutes)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <!--
+        <td>
+            @Html.DisplayFor(modelItem => item.busRoute.routeName)
+        </td>
+         -->
+        <td>
+            @Html.DisplayFor(modelItem => item.busStopNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.busStop.location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.offsetMinutes)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.routeStopId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.routeStopId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.routeStopId }) |
+            @Html.ActionLink("Schedule", "routeStopSchedule", new { id=item.routeStopId /*, routeCode=item.busRouteCode, offset=item.offsetMinutes*/ })
+        </td>
+    </tr>
+}
+
+</table>

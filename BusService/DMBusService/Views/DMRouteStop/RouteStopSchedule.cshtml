@@ -1,0 +1,37 @@
+﻿
+@model IEnumerable<DMBusService.Models.routeSchedule>
+
+@{
+    ViewBag.Title = "RouteStopSchedule";
+}
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>Bus Route Code: @ViewBag.routeCode</h1> <br/>
+                <h1>Bus Route Name: @ViewBag.routeName</h1>
+            </hgroup>
+        </div>
+    </section>
+}
+
+<h2>Route Stop Schedule</h2>
+
+<table>
+    <tr>
+        <th>routeScheduleId</th>
+        @*<th>startTime</th>*@
+        <th>arrivalTime</th>
+        <th>isWeekDay</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.routeScheduleId</td>
+            @*<td>@item.startTime</td>*@
+            <td>@item.startTime</td>
+            <td>@item.isWeekDay</td>
+        </tr>        
+    }
+</table>

@@ -1,0 +1,56 @@
+﻿@model DMBusService.Models.routeStop
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>Bus Route Code: @ViewBag.routeCode</h1> <br/>
+                <h1>Bus Route Name: @ViewBag.routeName</h1>
+            </hgroup>
+        </div>
+    </section>
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>routeStop</legend>
+
+    <div class="display-label">
+        <b>
+         @Html.DisplayNameFor(model => model.busRoute.routeName)
+        </b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.busRoute.routeName)
+    </div>
+
+    <div class="display-label">
+        <b>
+         @Html.DisplayNameFor(model => model.busStop.location)
+        </b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.busStop.location)
+    </div>
+
+    <div class="display-label">
+        <b>
+         @Html.DisplayNameFor(model => model.offsetMinutes)
+            </b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.offsetMinutes)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

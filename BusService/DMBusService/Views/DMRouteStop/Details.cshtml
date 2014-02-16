@@ -1,0 +1,53 @@
+﻿@model DMBusService.Models.routeStop
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>Bus Route Code: @ViewBag.routeCode</h1> <br/>
+                <h1>Bus Route Name: @ViewBag.routeName</h1>
+            </hgroup>
+        </div>
+    </section>
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>routeStop</legend>
+
+    <div class="editor-label">
+       <b>
+         @Html.DisplayNameFor(model => model.busRoute.routeName)
+        </b>
+     </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.busRoute.routeName)
+    </div>
+
+    <div class="editor-label">
+        <b>
+         @Html.DisplayNameFor(model => model.busStop.location)
+        </b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.busStop.location)
+    </div>
+
+    <div class="editor-label">
+        <b>
+         @Html.DisplayNameFor(model => model.offsetMinutes)
+        </b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.offsetMinutes)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.routeStopId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
+           <!--  - My ASP.NET MVC Application -->
+        
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <img src="~/Images/busLogo.jpg" alt="busLogo.jpg" />
+                    @*<p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>*@
+                </div>
+                <div class="float-right">
+                    <section id="login">                        
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Route", "Index", "DMRoute")</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                 <span style="color:red; font-weight:bold;"> 
+                @TempData["message"]
+           </span> 
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>
+                    <a href="mailto:dmakhija-cc@conestogac.on.ca">
+                    &copy; @DateTime.Now.Year - <b>Durga Makhija</b> - section 2
+                    </a></p>
+                </div>
+                <div class="float-right">
+                    <ul id="menu">
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                </div>
+            </div>
+        </footer>
+
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

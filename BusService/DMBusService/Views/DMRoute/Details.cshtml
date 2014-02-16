@@ -1,0 +1,33 @@
+﻿@model DMBusService.Models.busRoute
+
+@{
+    ViewBag.Title = "BusRouteDetails";
+}
+
+<h2>Bus Route Details</h2>
+
+<fieldset>
+    <legend>busRoute</legend>
+
+    <div class="display-label">
+        <b>
+         @Html.DisplayNameFor(model => model.busRouteCode)
+         </b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.busRouteCode)
+    </div>
+
+    <div class="display-label">
+        <b>
+         @Html.DisplayNameFor(model => model.routeName)
+        </b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.routeName)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.busRouteCode }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

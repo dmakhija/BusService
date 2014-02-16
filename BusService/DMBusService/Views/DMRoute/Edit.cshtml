@@ -1,0 +1,57 @@
+﻿@model DMBusService.Models.busRoute
+
+@{
+    ViewBag.Title = "EditBusRoute";
+}
+
+<h2>Edit Bus Route</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>busRoute</legend>
+
+        @Html.HiddenFor(Model => Model.busRouteCode)
+
+        <div class="editor-label">            
+            @Html.LabelFor(model => model.busRouteCode)                
+        </div>
+            
+        <div class="editor-label">
+            <b>
+            @Html.DisplayFor(Model=> Model.busRouteCode)
+            </b>
+          </div>
+
+        <!--
+        <div class="editor-label">
+            @Html.LabelFor(model => model.busRouteCode)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.busRouteCode)
+            @Html.ValidationMessageFor(model => model.busRouteCode)
+        </div>
+        -->
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.routeName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.routeName)
+            @Html.ValidationMessageFor(model => model.routeName)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

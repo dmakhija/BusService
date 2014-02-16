@@ -1,0 +1,36 @@
+﻿@model DMBusService.Models.busRoute
+
+@{
+    ViewBag.Title = "Delete Bus Route";
+}
+
+<h2>Delete Bus Route</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>busRoute</legend>
+
+    <div class="editor-label">
+        <b>
+         @Html.DisplayNameFor(model => model.busRouteCode)
+            </b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.busRouteCode)
+    </div>
+
+    <div class="editor-label">
+        <b>
+         @Html.DisplayNameFor(model => model.routeName)
+            </b>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.routeName)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
